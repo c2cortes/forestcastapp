@@ -10,12 +10,11 @@ import { styles } from './Styles'
 
 export default class Search extends Component {
 
-    state = {
-      searchWord: 'Madrid'
-    }
-  
-    constructor(){
-      super()
+    constructor(props){
+      super(props); 
+      this.state = {
+        searchWord: 'Madrid'
+      }
     }
   
     componentDidMount(){

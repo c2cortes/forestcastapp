@@ -3,6 +3,7 @@ import {Platform, StyleSheet, Text, View } from 'react-native';
 import axios from 'axios';
 import Search from './search';
 import ForecastDetail from './forecastDetail';
+import CitiesHistory from './citiesHistory';
 
 export default class Main extends Component<{}> {
 
@@ -14,18 +15,30 @@ export default class Main extends Component<{}> {
           temp: ''
         }
       },
+      citiesHistory: [],
       appid: 'b311fe07c3d6118690b29312a9b3110c'
     };
   }
   
-  setForestData(){
+  addCityToHistory(city){
+    const citiesHistory = this.state.citiesHistory;
+
+    const exists = citiesHistory.find(function(element){
+      return element;
+    })
     
+    if(exists === undefined) {
+      citiesHistory.push(city);
+      console.log('doesnt exists => ', exists);
+    }
+
+    this.setState({ citiesHistory });
   }
 
   callApi(city){
     const that  = this;
     const url   = 'http://api.openweathermap.org/data/2.5/weather';
-    console.log('url => ', url);
+    
     axios.get(url, {
       params: {
         q: city,
@@ -33,31 +46,21 @@ export default class Main extends Component<{}> {
       }
     })
     .then((response) => {
-      // handle success
-      console.log(response);
       if(response.status === 200){
-        this.setState({ forestData: response.data }, () => {
-          console.log('forestData => ', this.state.forestData);
+        this.setState({ forecastDetailVisible: true, forestData: response.data }, () => {
+          this.addCityToHistory(city);
         });
       }
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .finally(function () {
-      // always executed
     });
     axios.get(url);
-
-    
   }
 
   render() {
     return (
       <View>
         <Search callApi={(city) => this.callApi(city)} />
-        <ForecastDetail forestData={this.state.forestData} />
+        <CitiesHistory citiesHistory={ this.state.citiesHistory } onPressCity={ (city) => this.callApi(city) } />
+        { this.state.forecastDetailVisible ? <ForecastDetail forestData={this.state.forestData} /> : null }
       </View>
     );
   }

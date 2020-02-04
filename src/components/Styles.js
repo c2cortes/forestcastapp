@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
   },
   sectionContainer: {
-    marginTop: 15,
+    marginTop: 10,
     paddingHorizontal: 24,
     flexDirection: 'row'
   },

@@ -161,7 +161,6 @@
 				1408943BF1E524605147045E /* Pods-forecastAppTests.debug.xcconfig */,
 				9D64FD5FFCA98CBC76B25670 /* Pods-forecastAppTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -308,6 +307,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);

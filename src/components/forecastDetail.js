@@ -6,23 +6,13 @@ import {
   Button,
 } from 'react-native';
 
+import MapView from 'react-native-maps';
 import { styles } from './Styles'
 
 export default class ForecastDetail extends Component {
-
-    state = {
-      searchWord: ''
-    }
   
-    constructor(){
-      super()
-    }
-  
-    componentDidMount(){
-  
-    }
-  
-    handleSend = () => {
+    constructor(props){
+      super(props)
     }
   
     render() {
@@ -32,7 +22,10 @@ export default class ForecastDetail extends Component {
                 pressure    = main && main.pressure,
                 humidity    = main && main.humidity,
                 temp_max    = main && main.temp_max,
-                temp_min    = main && main.temp_min;
+                temp_min    = main && main.temp_min,
+                coord       = forestData && forestData.coord,
+                lon         = coord.lon,
+                lat         = coord.lat;
   
       return (
         <View>
@@ -65,6 +58,19 @@ export default class ForecastDetail extends Component {
                 <Text style={styles.sectionDescription}>
                     {temp_min}
                 </Text>
+            </View>
+
+            <View>
+                <MapView
+                    region={{
+                        latitude: lat,
+                        longitude: lon,
+                        latitudeDelta: lon,
+                        longitudeDelta: lat,
+                    }}
+                    zoomControlEnabled={true}
+                    >
+                </MapView>
             </View>
             
         </View>
